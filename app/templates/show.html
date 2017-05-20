@@ -3,17 +3,13 @@
     <title>Monster Trucks</title>
   </head>
   <body>
-    <h1>HERE ARE ALL THE MONSTER TRUCKS!</h1>
-    <a href="/">Go back to homepage<a>
-    <br>
-    <a href="/monster_trucks/new">Add new monster truck<a>
+    <h1>HERE IS THAT ONE MONSTER TRUCK!</h1>
+    <a href="/monster_trucks">Go back to all trucks<a>
     <br><br>
 
-    {% for truck in trucks %}
+    {% for truck in truck %}
       <br><br>
-      <a href="/monster_trucks/{{ truck.id }}">
-        <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple71/v4/0e/fb/3a/0efb3a8a-ee19-5c9f-9bd5-e9c5f7269f61/source/256x256bb.jpg" height="75">
-      </a>
+      <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple71/v4/0e/fb/3a/0efb3a8a-ee19-5c9f-9bd5-e9c5f7269f61/source/256x256bb.jpg" height="75">
       <p>Name: {{ truck.name }} - Color: {{ truck.color }}</p>
       <form action="/monster_trucks/{{ truck.id }}/edit">
         <input type="submit" name="delete" value="Edit">
@@ -22,6 +18,5 @@
         <input type="submit" name="delete" value="Delete">
       </form>
     {% endfor %}
-
   </body>
 </html>
