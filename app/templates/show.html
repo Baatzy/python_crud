@@ -6,17 +6,15 @@
     <h1>HERE IS THAT ONE MONSTER TRUCK!</h1>
     <a href="/monster_trucks">Go back to all trucks<a>
     <br><br>
-
-    {% for truck in truck %}
       <br><br>
       <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple71/v4/0e/fb/3a/0efb3a8a-ee19-5c9f-9bd5-e9c5f7269f61/source/256x256bb.jpg" height="75">
-      <p>Name: {{ truck.name }} - Color: {{ truck.color }}</p>
+      <p>Name: {{ truck.name }}</p>
+      <p>Name: {{ truck.color }}</p>
       <form action="/monster_trucks/{{ truck.id }}/edit">
         <input type="submit" name="delete" value="Edit">
       </form>
-      <form action="/monster_trucks/{{ truck.id }}?_method=DELETE" method="POST">
+      <form action="/delete_truck/{{ truck.id }}" method="delete">
         <input type="submit" name="delete" value="Delete">
       </form>
-    {% endfor %}
   </body>
 </html>
