@@ -1,6 +1,11 @@
-from app import app, db
-from flask import Flask, jsonify, render_template, redirect, request, url_for
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, request, redirect, url_for
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/python_monster_trucks'
+app.debug = True
+db = SQLAlchemy(app)
 
 class MonsterTruck (db.Model):
     __tablename__ = 'monster_trucks'
@@ -15,7 +20,6 @@ class MonsterTruck (db.Model):
 
     def __repr__(self):
         return '<MonsterTruck %r>' % self.name
-
 
 #GET HOMEPAGE
 @app.route('/')
@@ -48,20 +52,14 @@ def postTruck ():
     return redirect('/monster_trucks')
 
 #GET EDIT TRUCK FORM
-@app.route('/monster_trucks/<id>/edit')
+@app.route('/monster_trucks/edit/<id>/')
 def edit (id):
     truck = MonsterTruck.query.filter_by(id=id).first()
     return render_template('edit.html', truck=truck)
 
 #UPDATE ONE TRUCK
-@app.route('/update_truck/<id>/', methods=['GET', 'PUT'])
+@app.route('/monster_trucks/edit/<id>/update', methods=['POST'])
 def putTruck (id):
-    if request.method == 'GET':
-        print('Hit GET for the PUT route.')
-
-    if request.method == 'DELETE':
-        print('Hit PUT for the PUT route!!!')
-
     truck = MonsterTruck.query.filter_by(id=id).first()
     truck.name = request.form['name']
     truck.color = request.form['color']
@@ -69,14 +67,11 @@ def putTruck (id):
     return redirect(f'/monster_trucks/{id}')
 
 #DELETE ONE TRUCK
-@app.route('/delete_truck/<id>/', methods=['GET', 'DELETE'])
+@app.route('/delete_truck/<id>', methods=['POST'])
 def deleteTruck (id):
-    if request.method == 'GET':
-        print('Hit GET for the DELETE route.')
-
-    if request.method == 'DELETE':
-        print('Hit DELETE for the DELETE route!!!')
-        
     MonsterTruck.query.filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('index'))
+
+if __name__ == "__main__":
+    app.run()

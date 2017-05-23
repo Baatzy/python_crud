@@ -6,7 +6,7 @@
       <h1>EDIT MONSTER TRUCK!</h1>
       <a href="/monster_trucks">Go back to all trucks<a>
       <br><br>
-      <form class="" action="/update_truck/{{ truck.id }}/" method="get">
+      <form class="" action="/monster_trucks/edit/{{ truck.id }}/update" method="POST">
         <label for="name">Name of truck</label><br>
         <input type="text" name="name" value="{{ truck.name }}" required>
         <br><br>
